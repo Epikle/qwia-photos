@@ -28,10 +28,10 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout component={Albums} />} />
-        <Route path="/album/:id" element={<Layout component={Album} />} />
+        <Route path="/album/:aid" element={<Layout component={Album} />} />
         <Route path="/admin" element={<ProtectedRoute component={Admin} />} />
         <Route
-          path="/admin/:id"
+          path="/admin/:aid"
           element={<ProtectedRoute component={Photos} />}
         />
         <Route path="*" element={<Layout component={Albums} />} />

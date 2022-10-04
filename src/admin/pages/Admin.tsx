@@ -3,6 +3,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import AlbumsList from '../components/AlbumsList';
 import Button from '../../shared/components/Form/Button';
 import NewAlbum from '../components/NewAlbum';
+import { URLS } from '../../shared/util/types';
 
 const Admin: React.FC = () => {
   const { logout, user } = useAuth0();
@@ -16,7 +17,7 @@ const Admin: React.FC = () => {
       Hello {user.name},{' '}
       <Button
         onClick={() => {
-          logout({ returnTo: import.meta.env.VITE_APP_PAGE_URL || '' });
+          logout({ returnTo: URLS.pageUrl });
         }}
       >
         Logout

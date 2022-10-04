@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { Album } from '../../shared/util/types';
-
+import { getVisibleAlbums } from '../../shared/util/fetch';
 import AlbumList from '../components/AlbumList';
 
 const Albums: React.FC = () => {
@@ -14,15 +14,8 @@ const Albums: React.FC = () => {
     data: albums,
     error,
   } = useQuery<Album[], Error>(['albumsData'], async () => {
-    const response = await fetch(
-      `${import.meta.env.VITE_APP_API_URL}/api/v2/qwia-photos/album`,
-    );
-
-    if (!response.ok) {
-      throw new Error('Something went wrong...');
-    }
-
-    return response.json();
+    const albums = await getVisibleAlbums();
+    return albums;
   });
 
   if (isLoading) return <p>Loading...</p>;

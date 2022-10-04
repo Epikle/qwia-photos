@@ -4,29 +4,22 @@ import { useParams } from 'react-router-dom';
 
 import PhotoList from '../../photos/components/PhotoList';
 import { Album as AlbumType } from '../../shared/util/types';
+import { getAlbumById } from '../../shared/util/fetch';
 import AlbumHeader from '../components/AlbumHeader';
 
 const Album: React.FC = () => {
-  const { id } = useParams();
+  const { aid } = useParams();
+
+  if (!aid) return null;
 
   const {
     isLoading,
     isError,
     data: album,
     error,
-  } = useQuery<AlbumType, Error>(['albumData', id], async () => {
-    const getVisitorId = localStorage.getItem('qp-id');
-    const response = await fetch(
-      `${
-        import.meta.env.VITE_APP_API_URL
-      }/api/v2/qwia-photos/album/${id}?lid=${getVisitorId}`,
-    );
-
-    if (!response.ok) {
-      throw new Error('Something went wrong.');
-    }
-
-    return response.json();
+  } = useQuery<AlbumType, Error>(['albumData', aid], async () => {
+    const album = await getAlbumById(aid);
+    return album;
   });
 
   if (isLoading) return <p>Loading...</p>;
@@ -37,7 +30,7 @@ const Album: React.FC = () => {
   return (
     <Fragment>
       <AlbumHeader title={album.title} />
-      <PhotoList photos={album.photos} albumId={album.id} />
+      <PhotoList photos={album.photos} aid={album.id} />
     </Fragment>
   );
 };

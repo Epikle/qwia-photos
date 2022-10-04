@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { useAuth0 } from '@auth0/auth0-react';
-import axios from 'axios';
 
 import Button from '../../shared/components/Form/Button';
-import { postNewPhoto } from '../util/fetch';
+import { getS3PutUrl, postNewPhoto } from '../../shared/util/fetch';
 
 import styles from './NewPhoto.module.scss';
 
-const NewPhoto: React.FC<{ albumId: string }> = ({ albumId }) => {
+const NewPhoto: React.FC<{ aid: string }> = ({ aid }) => {
   const queryClient = useQueryClient();
   const { getAccessTokenSilently } = useAuth0();
   const [file, setFile] = useState<File>();
@@ -26,11 +26,11 @@ const NewPhoto: React.FC<{ albumId: string }> = ({ albumId }) => {
       key: string;
       accessToken: string;
     }) => {
-      await postNewPhoto(albumId, title, key, accessToken);
+      await postNewPhoto(aid, title, key, accessToken);
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['albumData', albumId]);
+        queryClient.invalidateQueries(['albumData', aid]);
       },
     },
   );
@@ -46,17 +46,7 @@ const NewPhoto: React.FC<{ albumId: string }> = ({ albumId }) => {
       const accessToken = await getAccessTokenSilently();
       const fileType = encodeURIComponent(file.type);
 
-      const config = {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      };
-
-      const { data } = await axios.get(
-        `${
-          import.meta.env.VITE_APP_API_URL
-        }/api/v2/qwia-photos/media/${albumId}?filetype=${fileType}`,
-        config,
-      );
-      const { uploadUrl, key }: { uploadUrl: string; key: string } = data;
+      const { uploadUrl, key } = await getS3PutUrl(aid, fileType, accessToken);
 
       //upload to S3
       await axios.put(uploadUrl, file);

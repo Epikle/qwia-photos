@@ -4,11 +4,10 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 import { Album } from '../../shared/util/types';
 import AlbumItem from './AlbumItem';
-import { getAllAlbums } from '../util/fetch';
+import { getAllAlbums } from '../../shared/util/fetch';
 
 const AlbumsList: React.FC = () => {
   const { getAccessTokenSilently } = useAuth0();
-
   const {
     isLoading,
     isError,

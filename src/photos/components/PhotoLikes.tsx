@@ -5,58 +5,35 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '../../shared/components/Form/Button';
+import { addLike, deleteLike } from '../../shared/util/fetch';
 
 import styles from './PhotoLikes.module.scss';
 
 type Props = {
-  imgId: string;
+  pid: string;
+  aid: string;
   likes: [number, boolean];
-  albumId: string;
 };
 
-const PhotoLikes: React.FC<Props> = ({ imgId, likes, albumId }) => {
+const PhotoLikes: React.FC<Props> = ({ pid, aid, likes }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
 
   const queryClient = useQueryClient();
 
   const deleteLikeMutation = useMutation(
-    (visitorId: string) =>
-      fetch(
-        `${
-          import.meta.env.VITE_APP_API_URL
-        }/api/v2/qwia-photos/photo/like/${imgId}?lid=${visitorId}`,
-        {
-          method: 'DELETE',
-        },
-      ),
-
+    async (lid: string) => await deleteLike(pid, lid),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['albumData', albumId]);
+        queryClient.invalidateQueries(['albumData', aid]);
       },
     },
   );
   const addLikeMutation = useMutation(
-    (visitorId: string) =>
-      fetch(
-        `${
-          import.meta.env.VITE_APP_API_URL
-        }/api/v2/qwia-photos/photo/like/${imgId}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            lid: visitorId,
-          }),
-        },
-      ),
-
+    async (lid: string) => await addLike(pid, lid),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['albumData', albumId]);
+        queryClient.invalidateQueries(['albumData', aid]);
       },
     },
   );

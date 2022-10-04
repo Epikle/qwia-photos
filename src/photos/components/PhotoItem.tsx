@@ -1,10 +1,8 @@
 import { Fragment, useState } from 'react';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faImage } from '@fortawesome/free-solid-svg-icons';
 
-import { Photo } from '../../shared/util/types';
-
+import { Photo, URLS } from '../../shared/util/types';
 import PhotoLikes from './PhotoLikes';
 import PhotoView from './PhotoView';
 import Button from '../../shared/components/Form/Button';
@@ -12,11 +10,11 @@ import Button from '../../shared/components/Form/Button';
 import styles from './PhotoItem.module.scss';
 
 type Props = {
+  aid: string;
   photo: Photo;
-  albumId: string;
 };
 
-const PhotoItem: React.FC<Props> = ({ photo, albumId }) => {
+const PhotoItem: React.FC<Props> = ({ aid, photo }) => {
   const { id, title, url, likes } = photo;
   const [isView, setIsView] = useState(false);
 
@@ -28,19 +26,17 @@ const PhotoItem: React.FC<Props> = ({ photo, albumId }) => {
     <Fragment>
       {isView && (
         <PhotoView onClick={viewBtnHandler}>
-          <img src={`${import.meta.env.VITE_APP_AWS_URL}/${url}`} alt={title} />
+          <img src={`${URLS.awsUrl}/${url}`} alt={title} />
         </PhotoView>
       )}
       <article className={styles.photo}>
         <div className={styles['photo__img-container']}>
-          {(!url || !import.meta.env.VITE_APP_AWS_URL) && (
-            <FontAwesomeIcon icon={faImage} />
-          )}
-          {url && import.meta.env.VITE_APP_AWS_URL && (
+          {(!url || !URLS.awsUrl) && <FontAwesomeIcon icon={faImage} />}
+          {url && URLS.awsUrl && (
             <Fragment>
               <img
                 className={styles.photo__img}
-                src={`${import.meta.env.VITE_APP_AWS_URL}/${url}`}
+                src={`${URLS.awsUrl}/${url}`}
                 alt={title}
               />
               <div className={styles['photo__img-overlay']}>
@@ -60,7 +56,7 @@ const PhotoItem: React.FC<Props> = ({ photo, albumId }) => {
             <abbr title={title}>{title}</abbr>
           </h3>
 
-          <PhotoLikes imgId={id} likes={likes} albumId={albumId} />
+          <PhotoLikes pid={id} aid={aid} likes={likes} />
         </div>
       </article>
     </Fragment>

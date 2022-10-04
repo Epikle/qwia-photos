@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import Button from '../../shared/components/Form/Button';
 import { Link } from 'react-router-dom';
-import { deletePhoto, patchAlbum } from '../util/fetch';
+import { deletePhoto, patchAlbum } from '../../shared/util/fetch';
 import { NewData } from '../../shared/util/types';
 
 type Props = {

@@ -4,15 +4,15 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 import Button from '../../shared/components/Form/Button';
 import { Photo } from '../../shared/util/types';
-import { deletePhoto, patchPhoto } from '../util/fetch';
+import { deletePhoto, patchPhoto } from '../../shared/util/fetch';
 
 type Props = {
+  aid: string;
   photo: Photo;
-  albumId: string;
 };
 
-const PhotoItem: React.FC<Props> = ({ photo, albumId }) => {
-  const { id, title } = photo;
+const PhotoItem: React.FC<Props> = ({ aid, photo }) => {
+  const { id: pid, title } = photo;
   const queryClient = useQueryClient();
   const newTitleInput = useRef<HTMLInputElement>(null);
   const [newTitle, setNewTitle] = useState(false);
@@ -21,11 +21,11 @@ const PhotoItem: React.FC<Props> = ({ photo, albumId }) => {
   const deletePhotoMutation = useMutation(
     async () => {
       const accessToken = await getAccessTokenSilently();
-      await deletePhoto(id, accessToken);
+      await deletePhoto(pid, accessToken);
     },
     {
       onSuccess: async () => {
-        queryClient.invalidateQueries(['albumData', albumId]);
+        queryClient.invalidateQueries(['albumData', aid]);
       },
     },
   );
@@ -33,11 +33,11 @@ const PhotoItem: React.FC<Props> = ({ photo, albumId }) => {
   const titlePhotoMutation = useMutation(
     async (title: string) => {
       const accessToken = await getAccessTokenSilently();
-      await patchPhoto(title, id, accessToken);
+      await patchPhoto(title, pid, accessToken);
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['albumData', albumId]);
+        queryClient.invalidateQueries(['albumData', aid]);
       },
     },
   );
