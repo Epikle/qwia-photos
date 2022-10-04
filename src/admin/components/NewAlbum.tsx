@@ -3,7 +3,7 @@ import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { useAuth0 } from '@auth0/auth0-react';
 
 import Button from '../../shared/components/Form/Button';
-import { fetchNewAlbum } from '../util/fetch';
+import { postNewAlbum } from '../util/fetch';
 
 const NewAlbum: React.FC = () => {
   const albumTitle = useRef<HTMLInputElement>(null);
@@ -13,7 +13,7 @@ const NewAlbum: React.FC = () => {
   const newAlbumMutation = useMutation(
     async (title: string) => {
       const accessToken = await getAccessTokenSilently();
-      await fetchNewAlbum(title, accessToken);
+      await postNewAlbum(title, accessToken);
     },
     {
       onSuccess: () => {

@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
-import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
+import React, { useState, useEffect, useRef } from 'react';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios';
 
 import Button from '../../shared/components/Form/Button';
-import { fetchNewPhoto } from '../util/fetch';
+import { postNewPhoto } from '../util/fetch';
 
 import styles from './NewPhoto.module.scss';
 
@@ -12,14 +13,20 @@ const NewPhoto: React.FC<{ albumId: string }> = ({ albumId }) => {
   const { getAccessTokenSilently } = useAuth0();
   const [file, setFile] = useState<File>();
   const [fileUrl, setFileUrl] = useState('');
-  const photoInput = useRef<HTMLInputElement>(null);
-  const titleInput = useRef<HTMLInputElement>(null);
+  const [title, setTitle] = useState('');
+  const fileInput = useRef<HTMLInputElement>(null);
 
   const newPhotoMutation = useMutation(
-    async (formData: FormData) => {
-      const accessToken = await getAccessTokenSilently();
-      console.log(formData, accessToken);
-      // await fetchNewPhoto(albumId, formData, accessToken);
+    async ({
+      title,
+      key,
+      accessToken,
+    }: {
+      title: string;
+      key: string;
+      accessToken: string;
+    }) => {
+      await postNewPhoto(albumId, title, key, accessToken);
     },
     {
       onSuccess: () => {
@@ -33,55 +40,54 @@ const NewPhoto: React.FC<{ albumId: string }> = ({ albumId }) => {
   ) => {
     event.preventDefault();
 
-    if (
-      !file ||
-      !titleInput.current ||
-      !photoInput.current ||
-      titleInput.current.value.trim() === ''
-    ) {
-      return;
-    }
+    if (title.trim() === '' || !file || !fileInput.current?.value) return;
 
     try {
-      const formData = new FormData();
-      formData.append('title', titleInput.current.value);
-      formData.append('photo', file);
-
-      // newPhotoMutation.mutate(formData);
-
       const accessToken = await getAccessTokenSilently();
-      const response = await fetch(
+      const fileType = encodeURIComponent(file.type);
+
+      const config = {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      };
+
+      const { data } = await axios.get(
         `${
           import.meta.env.VITE_APP_API_URL
-        }/api/v2/qwia-photos/media/${albumId}?filetype=image/jpeg`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
+        }/api/v2/qwia-photos/media/${albumId}?filetype=${fileType}`,
+        config,
       );
-      const responseData = await response.json();
+      const { uploadUrl, key }: { uploadUrl: string; key: string } = data;
 
-      console.log(responseData);
+      //upload to S3
+      await axios.put(uploadUrl, file);
+
+      newPhotoMutation.mutate({ title, key, accessToken });
     } catch (error) {
       console.log(error);
     }
-    titleInput.current.value = '';
-    photoInput.current.value = '';
-    setFile(undefined);
+
+    fileInput.current.value = '';
+    setTitle('');
     setFileUrl('');
+    setFile(undefined);
   };
 
   const imgInputChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    if (event.target.files && event.target.files.length === 1) {
-      setFile(event.target.files[0]);
-      setFileUrl(URL.createObjectURL(event.target.files[0]));
+    if (event.currentTarget.files && event.currentTarget.files.length === 1) {
+      setFile(event.currentTarget.files[0]);
+      setFileUrl(URL.createObjectURL(event.currentTarget.files[0]));
       return;
     }
-    setFile(undefined);
     setFileUrl('');
+    setFile(undefined);
+  };
+
+  const titleInputChangeHandler = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setTitle(event.currentTarget.value);
   };
 
   useEffect(() => {
@@ -94,15 +100,21 @@ const NewPhoto: React.FC<{ albumId: string }> = ({ albumId }) => {
     <form onSubmit={newPhotoSubmitHandler} className={styles['new-photo']}>
       <label htmlFor="photo-img">Photo</label>
       <input
-        ref={photoInput}
         type="file"
         id="photo-img"
         accept="image/png, image/gif, image/jpeg"
         onChange={imgInputChangeHandler}
+        ref={fileInput}
         required
       />
       <label htmlFor="photo-title">Photo Title</label>
-      <input type="text" id="photo-title" ref={titleInput} required />
+      <input
+        value={title}
+        type="text"
+        id="photo-title"
+        onChange={titleInputChangeHandler}
+        required
+      />
       <Button>Add Photo</Button>
       {fileUrl && <img src={fileUrl} alt="preview" />}
     </form>

@@ -4,7 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 import { Album } from '../../shared/util/types';
 import AlbumItem from './AlbumItem';
-import { fetchAllAlbums } from '../util/fetch';
+import { getAllAlbums } from '../util/fetch';
 
 const AlbumsList: React.FC = () => {
   const { getAccessTokenSilently } = useAuth0();
@@ -16,8 +16,8 @@ const AlbumsList: React.FC = () => {
     error,
   } = useQuery<Album[], Error>(['albumsData'], async () => {
     const accessToken = await getAccessTokenSilently();
-    const response = await fetchAllAlbums(accessToken);
-    return response;
+    const albums = await getAllAlbums(accessToken);
+    return albums;
   });
 
   if (isLoading) return <p>Loading...</p>;

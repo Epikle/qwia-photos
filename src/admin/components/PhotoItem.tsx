@@ -4,7 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 import Button from '../../shared/components/Form/Button';
 import { Photo } from '../../shared/util/types';
-import { fetchDeletePhoto, fetchEditPhoto } from '../util/fetch';
+import { deletePhoto, patchPhoto } from '../util/fetch';
 
 type Props = {
   photo: Photo;
@@ -21,7 +21,7 @@ const PhotoItem: React.FC<Props> = ({ photo, albumId }) => {
   const deletePhotoMutation = useMutation(
     async () => {
       const accessToken = await getAccessTokenSilently();
-      await fetchDeletePhoto(id, accessToken);
+      await deletePhoto(id, accessToken);
     },
     {
       onSuccess: async () => {
@@ -33,7 +33,7 @@ const PhotoItem: React.FC<Props> = ({ photo, albumId }) => {
   const titlePhotoMutation = useMutation(
     async (title: string) => {
       const accessToken = await getAccessTokenSilently();
-      await fetchEditPhoto(title, id, accessToken);
+      await patchPhoto(title, id, accessToken);
     },
     {
       onSuccess: () => {

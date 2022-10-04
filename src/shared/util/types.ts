@@ -15,3 +15,8 @@ export type Photo = {
   url: string;
   likes: [number, boolean];
 };
+
+export type NewData = {
+  title: string;
+  isPublished: boolean;
+};

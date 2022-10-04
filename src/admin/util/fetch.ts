@@ -1,76 +1,70 @@
-export const fetchAllAlbums = async (accessToken: string) => {
-  const response = await fetch(
-    `${import.meta.env.VITE_APP_API_URL}/api/v2/qwia-photos/album/all`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    },
-  );
+import axios from 'axios';
 
-  if (!response.ok) {
-    throw new Error('Something went wrong...');
-  }
+import { Album, NewData } from '../../shared/util/types';
 
-  return response.json();
+enum Url {
+  baseUrl = import.meta.env.VITE_APP_API_URL,
+}
+
+const getHeaders = (accessToken: string) => {
+  return {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  };
 };
 
-export const fetchNewAlbum = async (title: string, accessToken: string) => {
-  await fetch(`${import.meta.env.VITE_APP_API_URL}/api/v2/qwia-photos/album/`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify({
-      title: title,
-    }),
-  });
+export const getAllAlbums = async (accessToken: string) => {
+  const url = `${Url.baseUrl}/api/v2/qwia-photos/album/all`;
+  const config = getHeaders(accessToken);
+  const { data }: { data: Album[] } = await axios.get(url, config);
+
+  return data;
 };
 
-export const fetchNewPhoto = async (
-  albumId: string,
-  formData: FormData,
+export const postNewAlbum = async (title: string, accessToken: string) => {
+  const url = `${Url.baseUrl}/api/v2/qwia-photos/album/`;
+  const config = getHeaders(accessToken);
+
+  await axios.post(url, { title }, config);
+};
+
+export const patchAlbum = async (
+  data: NewData,
+  id: string,
   accessToken: string,
 ) => {
-  await fetch(
-    `${import.meta.env.VITE_APP_API_URL}/api/v2/qwia-photos/photo/${albumId}`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: formData,
-    },
-  );
+  const url = `${Url.baseUrl}/api/v2/qwia-photos/album/${id}`;
+  const config = getHeaders(accessToken);
+
+  await axios.patch(url, data, config);
 };
 
-export const fetchDeletePhoto = async (id: string, accessToken: string) => {
-  await fetch(
-    `${import.meta.env.VITE_APP_API_URL}/api/v2/qwia-photos/photo/${id}`,
-    {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    },
-  );
+export const postNewPhoto = async (
+  albumId: string,
+  title: string,
+  key: string,
+  accessToken: string,
+) => {
+  const url = `${Url.baseUrl}/api/v2/qwia-photos/photo/${albumId}`;
+  const config = getHeaders(accessToken);
+  const body = { title, url: key };
+
+  await axios.post(url, body, config);
 };
 
-export const fetchEditPhoto = async (
+export const deletePhoto = async (id: string, accessToken: string) => {
+  const url = `${Url.baseUrl}/api/v2/qwia-photos/photo/${id}`;
+  const config = getHeaders(accessToken);
+
+  await axios.delete(url, config);
+};
+
+export const patchPhoto = async (
   title: string,
   id: string,
   accessToken: string,
 ) => {
-  await fetch(
-    `${import.meta.env.VITE_APP_API_URL}/api/v2/qwia-photos/photo/${id}`,
-    {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({ title }),
-    },
-  );
+  const url = `${Url.baseUrl}/api/v2/qwia-photos/photo/${id}`;
+  const config = getHeaders(accessToken);
+
+  await axios.patch(url, { title }, config);
 };

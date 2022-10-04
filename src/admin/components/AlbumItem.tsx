@@ -4,16 +4,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import Button from '../../shared/components/Form/Button';
 import { Link } from 'react-router-dom';
+import { deletePhoto, patchAlbum } from '../util/fetch';
+import { NewData } from '../../shared/util/types';
 
 type Props = {
   id: string;
   title: string;
   isPublished: boolean;
-};
-
-type NewData = {
-  title?: string;
-  isPublished?: boolean;
 };
 
 const AlbumItem: React.FC<Props> = ({ id, title, isPublished }) => {
@@ -30,18 +27,8 @@ const AlbumItem: React.FC<Props> = ({ id, title, isPublished }) => {
   const deleteAlbumMutate = useMutation(
     async () => {
       const accessToken = await getAccessTokenSilently();
-      await fetch(
-        `${import.meta.env.VITE_APP_API_URL}/api/v2/qwia-photos/album/${id}`,
-        {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
+      await deletePhoto(id, accessToken);
     },
-
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['albumsData']);
@@ -52,19 +39,8 @@ const AlbumItem: React.FC<Props> = ({ id, title, isPublished }) => {
   const mutateAlbumData = useMutation(
     async (newData: NewData) => {
       const accessToken = await getAccessTokenSilently();
-      await fetch(
-        `${import.meta.env.VITE_APP_API_URL}/api/v2/qwia-photos/album/${id}`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-          },
-          body: JSON.stringify(newData),
-        },
-      );
+      await patchAlbum(newData, id, accessToken);
     },
-
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['albumsData']);
@@ -90,7 +66,10 @@ const AlbumItem: React.FC<Props> = ({ id, title, isPublished }) => {
       newTitleInput.current?.value !== title &&
       newTitleInput.current?.value.trim() !== ''
     ) {
-      mutateAlbumData.mutate({ title: newTitleInput.current.value });
+      mutateAlbumData.mutate({
+        title: newTitleInput.current.value,
+        isPublished,
+      });
     }
     setNewTitle((prevState) => !prevState);
   };
