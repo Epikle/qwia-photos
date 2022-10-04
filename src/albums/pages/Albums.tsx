@@ -6,6 +6,8 @@ import { Album } from '../../shared/util/types';
 import AlbumList from '../components/AlbumList';
 
 const Albums: React.FC = () => {
+  document.title = `qwiaPHOTOS`;
+
   const {
     isLoading,
     isError,

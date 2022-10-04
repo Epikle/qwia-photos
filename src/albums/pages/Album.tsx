@@ -23,7 +23,7 @@ const Album: React.FC = () => {
     );
 
     if (!response.ok) {
-      throw new Error('Something went wrong...');
+      throw new Error('Something went wrong.');
     }
 
     return response.json();
@@ -32,14 +32,12 @@ const Album: React.FC = () => {
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error: {error.message}</p>;
 
+  document.title = `qwiaPHOTOS | ${album.title}`;
+
   return (
     <Fragment>
-      {album && (
-        <Fragment>
-          <AlbumHeader title={album.title} />
-          <PhotoList photos={album.photos} albumId={album.id} />
-        </Fragment>
-      )}
+      <AlbumHeader title={album.title} />
+      <PhotoList photos={album.photos} albumId={album.id} />
     </Fragment>
   );
 };
