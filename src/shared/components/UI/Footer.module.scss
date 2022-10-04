@@ -1,0 +1,8 @@
+@import '../../../setup.scss';
+
+.footer {
+  text-align: center;
+  font-size: $fs-small;
+  margin-block: 1rem;
+  user-select: none;
+}

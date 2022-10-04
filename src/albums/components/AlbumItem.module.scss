@@ -1,0 +1,41 @@
+@import '../../setup';
+
+.album {
+  @include frame;
+
+  &:hover,
+  &:focus-within {
+    filter: grayscale(100%);
+  }
+
+  a {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    color: $fc-main;
+    text-decoration: none;
+  }
+
+  &__img-container {
+    position: relative;
+    flex-grow: 1;
+    display: grid;
+    place-items: center;
+    font-size: 3rem;
+  }
+
+  &__img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+
+  &__info {
+    @include frame-info;
+  }
+
+  &__title {
+    @include frame-title;
+  }
+}

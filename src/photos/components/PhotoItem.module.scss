@@ -1,0 +1,59 @@
+@import '../../setup';
+
+.photo {
+  @include frame;
+
+  &__img-container {
+    position: relative;
+    flex: 1;
+    display: grid;
+    place-items: center;
+  }
+
+  &__img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+
+  &__img-overlay {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+
+    &-btn {
+      flex-grow: 1;
+      background-color: $photo-overlay-bg-color;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      font-size: 3.5rem;
+      opacity: 0.6;
+    }
+
+    &:hover,
+    &:focus-within {
+      opacity: 1;
+    }
+  }
+
+  &__info {
+    @include frame-info;
+  }
+
+  &__title {
+    @include frame-title;
+
+    abbr {
+      text-decoration: none;
+
+      &:hover {
+        cursor: help;
+      }
+    }
+  }
+}

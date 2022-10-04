@@ -1,0 +1,67 @@
+$color-red-300: #ff6565;
+$color-green-300: #a7c957;
+$color-blue-100: #edf2fb;
+$color-blue-300: #71a5de;
+$color-gray-100: #f8f9fb;
+$color-gray-200: #e1ecf7;
+$color-gray-300: #495057;
+$color-gray-800: #242424;
+
+$ff-primary: 'Roboto', sans-serif;
+$ff-photo-title: 'Merriweather', serif;
+$ff-awesome: 'Font Awesome 5 Free';
+$fc-main: $color-gray-300;
+$fc-hover: $color-blue-300;
+$fs-normal: 1rem;
+$fs-small: 0.75rem;
+
+$bg-color: $color-blue-100;
+
+$photo-border-color: $color-gray-200;
+$photo-info-bg-color: $color-gray-100;
+$photo-overlay-bg-color: transparentize($photo-border-color, 0.2);
+
+$border-radius: 5px;
+
+$media-max-width: 75rem;
+$media-mobile-width: 36rem;
+
+@mixin mobile {
+  @media (max-width: #{$media-mobile-width}) {
+    @content;
+  }
+}
+
+@mixin grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 18rem);
+  grid-auto-rows: 1fr;
+  gap: 1rem;
+}
+
+@mixin frame {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 2px solid $photo-border-color;
+  border-radius: $border-radius;
+  overflow: hidden;
+}
+
+@mixin frame-title {
+  font-size: $fs-normal;
+  font-weight: 300;
+  font-family: $ff-photo-title;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin frame-info {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: $photo-info-bg-color;
+}
