@@ -31,8 +31,8 @@ const PhotoItem: React.FC<Props> = ({ aid, photo }) => {
       )}
       <article className={styles.photo}>
         <div className={styles['photo__img-container']}>
-          {(!url || !URLS.awsUrl) && <FontAwesomeIcon icon={faImage} />}
-          {url && URLS.awsUrl && (
+          {(!url || !URLS.awsCloudUrl) && <FontAwesomeIcon icon={faImage} />}
+          {url && URLS.awsCloudUrl && (
             <Fragment>
               <img
                 className={styles.photo__img}
@@ -52,9 +52,9 @@ const PhotoItem: React.FC<Props> = ({ aid, photo }) => {
           )}
         </div>
         <div className={styles.photo__info}>
-          <h3 className={styles.photo__title}>
+          <h2 className={styles.photo__title}>
             <abbr title={title}>{title}</abbr>
-          </h3>
+          </h2>
 
           <PhotoLikes pid={id} aid={aid} likes={likes} />
         </div>

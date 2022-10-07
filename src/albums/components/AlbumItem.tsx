@@ -15,10 +15,10 @@ const AlbumItem: React.FC<{ album: Album }> = ({ album }) => {
     <article className={styles.album}>
       <Link to={`/album/${id}`}>
         <div className={styles['album__img-container']}>
-          {(!thumbnail.url || !URLS.awsUrl) && (
+          {(!thumbnail.url || !URLS.awsCloudUrl) && (
             <FontAwesomeIcon icon={faImage} />
           )}
-          {thumbnail.url && URLS.awsUrl && (
+          {thumbnail.url && URLS.awsCloudUrl && (
             <img
               className={styles.album__img}
               src={URLS.awsCloudUrl + '/300x200/' + thumbnail.url}
@@ -28,7 +28,7 @@ const AlbumItem: React.FC<{ album: Album }> = ({ album }) => {
         </div>
 
         <div className={styles.album__info}>
-          <h3 className={styles.album__title}>{title}</h3>
+          <h2 className={styles.album__title}>{title}</h2>
         </div>
       </Link>
     </article>
