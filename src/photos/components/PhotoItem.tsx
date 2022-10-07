@@ -26,7 +26,7 @@ const PhotoItem: React.FC<Props> = ({ aid, photo }) => {
     <Fragment>
       {isView && (
         <PhotoView onClick={viewBtnHandler}>
-          <img src={`${URLS.awsUrl}/${url}`} alt={title} />
+          <img src={`${URLS.awsCloudUrl}/fit-in/1200x800/${url}`} alt={title} />
         </PhotoView>
       )}
       <article className={styles.photo}>
@@ -36,7 +36,7 @@ const PhotoItem: React.FC<Props> = ({ aid, photo }) => {
             <Fragment>
               <img
                 className={styles.photo__img}
-                src={`${URLS.awsUrl}/${url}`}
+                src={`${URLS.awsCloudUrl}/300x200/${url}`}
                 alt={title}
               />
               <div className={styles['photo__img-overlay']}>

@@ -6,6 +6,7 @@ import PhotoList from '../../photos/components/PhotoList';
 import { Album as AlbumType } from '../../shared/util/types';
 import { getAlbumById } from '../../shared/util/fetch';
 import AlbumHeader from '../components/AlbumHeader';
+import LoadingSpinner from '../../shared/components/UI/LoadingSpinner';
 
 const Album: React.FC = () => {
   const { aid } = useParams();
@@ -22,7 +23,7 @@ const Album: React.FC = () => {
     return album;
   });
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoadingSpinner />;
   if (isError) return <p>Error: {error.message}</p>;
 
   document.title = `qwiaPHOTOS | ${album.title}`;

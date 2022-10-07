@@ -30,4 +30,5 @@ export const URLS = {
   apiUrl: import.meta.env.VITE_APP_API_URL as string,
   awsUrl: import.meta.env.VITE_APP_AWS_URL as string,
   pageUrl: import.meta.env.VITE_APP_PAGE_URL as string,
+  awsCloudUrl: import.meta.env.VITE_APP_AWS_CLOUDFRONT as string,
 };

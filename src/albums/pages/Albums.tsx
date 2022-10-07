@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Album } from '../../shared/util/types';
 import { getVisibleAlbums } from '../../shared/util/fetch';
 import AlbumList from '../components/AlbumList';
+import LoadingSpinner from '../../shared/components/UI/LoadingSpinner';
 
 const Albums: React.FC = () => {
   document.title = `qwiaPHOTOS`;
@@ -18,7 +19,7 @@ const Albums: React.FC = () => {
     return albums;
   });
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoadingSpinner />;
   if (isError) return <p>Error: {error.message}</p>;
 
   return (
