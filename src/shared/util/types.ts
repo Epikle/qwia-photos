@@ -2,6 +2,7 @@ export type Album = {
   id: string;
   title: string;
   isPublished: boolean;
+  totalPhotos: number;
   thumbnail: {
     likes: number;
     url: string;

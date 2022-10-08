@@ -7,13 +7,21 @@ import { Link } from 'react-router-dom';
 import { deletePhoto, patchAlbum } from '../../shared/util/fetch';
 import { NewData } from '../../shared/util/types';
 
+import styles from './AlbumItem.module.scss';
+
 type Props = {
   id: string;
   title: string;
   isPublished: boolean;
+  totalPhotos: number;
 };
 
-const AlbumItem: React.FC<Props> = ({ id, title, isPublished }) => {
+const AlbumItem: React.FC<Props> = ({
+  id,
+  title,
+  isPublished,
+  totalPhotos,
+}) => {
   const { getAccessTokenSilently } = useAuth0();
   const queryClient = useQueryClient();
   const [published, setPublished] = useState(false);
@@ -75,21 +83,24 @@ const AlbumItem: React.FC<Props> = ({ id, title, isPublished }) => {
   };
 
   return (
-    <div>
-      {newTitle && (
-        <input defaultValue={title} type="text" ref={newTitleInput} />
-      )}
-      {!newTitle && <Link to={`/admin/${id}`}>{title}</Link>}
-      {' ######## '}
-      <Button onClick={deleteAlbumBtnHandler}>Delete</Button>
-      {' | '}
-      <Button onClick={changeVisibilityBtnHandler}>
-        {published ? 'Hide' : 'Publish'}
-      </Button>
-      {' | '}
-      <Button onClick={editAlbumTitleBtnHandler}>
-        {newTitle ? 'Save Title' : 'Edit Title'}
-      </Button>
+    <div className={styles.albums}>
+      <div>
+        {newTitle && (
+          <input defaultValue={title} type="text" ref={newTitleInput} />
+        )}
+        {!newTitle && <Link to={`/admin/${id}`}>{title}</Link>}
+      </div>
+      <div>
+        <Button onClick={deleteAlbumBtnHandler}>Delete</Button>
+        {' | '}
+        <Button onClick={changeVisibilityBtnHandler} disabled={!totalPhotos}>
+          {published ? 'Hide' : 'Publish'}
+        </Button>
+        {' | '}
+        <Button onClick={editAlbumTitleBtnHandler}>
+          {newTitle ? 'Save Title' : 'Edit Title'}
+        </Button>
+      </div>
     </div>
   );
 };

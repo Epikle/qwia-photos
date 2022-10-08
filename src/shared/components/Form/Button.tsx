@@ -7,6 +7,7 @@ type Props = {
   children: ReactNode;
   className?: string[];
   ariaLabel?: string;
+  disabled?: boolean;
 };
 
 const Button: React.FC<Props> = ({
@@ -14,11 +15,13 @@ const Button: React.FC<Props> = ({
   children,
   className,
   ariaLabel,
+  disabled,
 }) => (
   <button
     className={className ? `${styles.btn} ${className.join(' ')}` : styles.btn}
     onClick={onClick}
     aria-label={ariaLabel}
+    disabled={disabled}
   >
     {children}
   </button>

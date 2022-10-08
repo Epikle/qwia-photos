@@ -5,6 +5,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import Button from '../../shared/components/Form/Button';
 import { postNewAlbum } from '../../shared/util/fetch';
 
+import styles from './NewPhoto.module.scss';
+
 const NewAlbum: React.FC = () => {
   const albumTitle = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
@@ -33,9 +35,16 @@ const NewAlbum: React.FC = () => {
   };
 
   return (
-    <form onSubmit={formSubmitHandler}>
-      <input type="text" ref={albumTitle} required />{' '}
-      <Button>Add new album</Button>
+    <form onSubmit={formSubmitHandler} className={styles['new-photo']}>
+      <label htmlFor="new-album">Create new album</label>
+      <input
+        type="text"
+        ref={albumTitle}
+        id="new-album"
+        placeholder="Album title"
+        required
+      />
+      <Button>Create</Button>
     </form>
   );
 };

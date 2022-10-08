@@ -1,11 +1,13 @@
 import { Fragment } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
 import { Album as AlbumType } from '../../shared/util/types';
 import { getAlbumById } from '../../shared/util/fetch';
 import PhotoItem from '../components/PhotoItem';
 import NewPhoto from '../components/NewPhoto';
+import Header from '../components/Header';
+import LoadingSpinner from '../../shared/components/UI/LoadingSpinner';
 
 const Photos: React.FC = () => {
   const { aid } = useParams();
@@ -22,21 +24,23 @@ const Photos: React.FC = () => {
     return album;
   });
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoadingSpinner />;
   if (isError) return <p>Error: {error.message}</p>;
 
   return (
     <Fragment>
-      <Link to="/admin">Home</Link>
-      {album && (
-        <Fragment>
-          {album.title}
-          {album.photos.map((photo) => (
-            <PhotoItem key={photo.id} photo={photo} aid={aid} />
-          ))}
-        </Fragment>
-      )}
-      <NewPhoto aid={aid} />
+      <Header />
+      <main>
+        {album && (
+          <Fragment>
+            {album.title}
+            {album.photos.map((photo) => (
+              <PhotoItem key={photo.id} photo={photo} aid={aid} />
+            ))}
+          </Fragment>
+        )}
+        <NewPhoto aid={aid} />
+      </main>
     </Fragment>
   );
 };

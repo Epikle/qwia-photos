@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+
+  h1 {
+    font-weight: bold;
+  }
+
+  button {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

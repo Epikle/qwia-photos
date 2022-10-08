@@ -1,8 +1,21 @@
 .new-photo {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   border: 1px solid gray;
-  margin: 2rem;
+  margin-block: 2rem;
   padding: 1rem;
   max-width: 26rem;
+
+  button {
+    margin-top: 1rem;
+    border: 1px solid gray;
+
+    &:hover,
+    &:focus {
+      background-color: gray;
+    }
+  }
+
+  img {
+    margin-top: 1rem;
+  }
 }

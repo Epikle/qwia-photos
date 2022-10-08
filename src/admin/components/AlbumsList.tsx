@@ -5,6 +5,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Album } from '../../shared/util/types';
 import AlbumItem from './AlbumItem';
 import { getAllAlbums } from '../../shared/util/fetch';
+import LoadingSpinner from '../../shared/components/UI/LoadingSpinner';
 
 const AlbumsList: React.FC = () => {
   const { getAccessTokenSilently } = useAuth0();
@@ -19,7 +20,7 @@ const AlbumsList: React.FC = () => {
     return albums;
   });
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoadingSpinner />;
   if (isError) return <p>Error: {error.message}</p>;
 
   return (
@@ -33,6 +34,7 @@ const AlbumsList: React.FC = () => {
               id={album.id}
               title={album.title}
               isPublished={album.isPublished}
+              totalPhotos={album.totalPhotos}
             />
           ))}
         </div>

@@ -6,6 +6,8 @@ import Button from '../../shared/components/Form/Button';
 import { Photo } from '../../shared/util/types';
 import { deletePhoto, patchPhoto } from '../../shared/util/fetch';
 
+import styles from './PhotoItem.module.scss';
+
 type Props = {
   aid: string;
   photo: Photo;
@@ -61,16 +63,25 @@ const PhotoItem: React.FC<Props> = ({ aid, photo }) => {
   };
 
   return (
-    <div>
-      {newTitle && (
-        <input defaultValue={title} type="text" ref={newTitleInput} required />
-      )}
-      {!newTitle && title} {' ###### '}
-      <Button onClick={deleteBtnHandler}>Delete</Button>
-      {' | '}
-      <Button onClick={editPhotoTitleBtnHandler}>
-        {newTitle ? 'Save Title' : 'Edit Title'}
-      </Button>
+    <div className={styles.photos}>
+      <div>
+        {newTitle && (
+          <input
+            defaultValue={title}
+            type="text"
+            ref={newTitleInput}
+            required
+          />
+        )}
+        {!newTitle && title}
+      </div>
+      <div>
+        <Button onClick={deleteBtnHandler}>Delete</Button>
+        {' | '}
+        <Button onClick={editPhotoTitleBtnHandler}>
+          {newTitle ? 'Save Title' : 'Edit Title'}
+        </Button>
+      </div>
     </div>
   );
 };
