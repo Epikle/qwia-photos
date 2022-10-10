@@ -6,6 +6,7 @@ import { Photo, URLS } from '../../shared/util/types';
 import PhotoLikes from './PhotoLikes';
 import PhotoView from './PhotoView';
 import Button from '../../shared/components/Form/Button';
+import LoadingSpinner from '../../shared/components/UI/LoadingSpinner';
 
 import styles from './PhotoItem.module.scss';
 
@@ -17,6 +18,7 @@ type Props = {
 const PhotoItem: React.FC<Props> = ({ aid, photo }) => {
   const { id, title, url, likes } = photo;
   const [isView, setIsView] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const viewBtnHandler = () => {
     setIsView((prevState) => !prevState);
@@ -26,7 +28,12 @@ const PhotoItem: React.FC<Props> = ({ aid, photo }) => {
     <Fragment>
       {isView && (
         <PhotoView onClick={viewBtnHandler}>
-          <img src={`${URLS.awsCloudUrl}/fit-in/1200x800/${url}`} alt={title} />
+          {isLoading && <LoadingSpinner relative />}
+          <img
+            src={`${URLS.awsCloudUrl}/fit-in/1200x800/${url}`}
+            alt={title}
+            onLoad={() => setIsLoading(false)}
+          />
         </PhotoView>
       )}
       <article className={styles.photo}>
