@@ -1,7 +1,5 @@
 import { ReactNode, MouseEvent } from 'react';
 
-import styles from './Button.module.scss';
-
 type Props = {
   onClick?: (event: MouseEvent<HTMLButtonElement>) => Promise<void> | void;
   children: ReactNode;
@@ -18,7 +16,7 @@ const Button: React.FC<Props> = ({
   disabled,
 }) => (
   <button
-    className={className ? `${styles.btn} ${className.join(' ')}` : styles.btn}
+    className={className && `${className.join(' ')}`}
     onClick={onClick}
     aria-label={ariaLabel}
     disabled={disabled}
