@@ -4,4 +4,6 @@ This is my latest full stack MERN project. It is currently under development. Ba
 
 Visitors can view uploaded photos and gave likes to them. Album thumbnail is chosen by the most liked photo.
 
+This app is using [oktaaniAPI](https://github.com/Epikle/oktaani-api).
+
 ![Preview of qwiaPHOTOS](qwia-photos-preview.png)
