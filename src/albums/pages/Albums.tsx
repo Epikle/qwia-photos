@@ -14,10 +14,7 @@ const Albums: React.FC = () => {
     isError,
     data: albums,
     error,
-  } = useQuery<Album[], Error>(['albumsData'], async () => {
-    const albums = await getVisibleAlbums();
-    return albums;
-  });
+  } = useQuery<Album[], Error>(['albumsData'], getVisibleAlbums);
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <p>Error: {error.message}</p>;

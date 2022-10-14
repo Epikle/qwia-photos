@@ -19,10 +19,10 @@ const Photos: React.FC = () => {
     isError,
     data: album,
     error,
-  } = useQuery<AlbumType, Error>(['albumData', aid], async () => {
-    const album = await getAlbumById(aid);
-    return album;
-  });
+  } = useQuery<AlbumType, Error>(
+    ['albumData', aid],
+    getAlbumById.bind(null, aid),
+  );
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <p>Error: {error.message}</p>;
