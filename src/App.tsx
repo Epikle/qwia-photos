@@ -1,13 +1,6 @@
 import React, { Fragment, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-// import ProtectedRoute from './admin/components/ProtectedRoute';
-// import Header from './shared/components/UI/Header';
-// import Footer from './shared/components/UI/Footer';
-// import Album from './albums/pages/Album';
-// import Admin from './admin/pages/Admin';
-// import Albums from './albums/pages/Albums';
-// import Photos from './admin/pages/Photos';
 import LoadingSpinner from './shared/components/UI/LoadingSpinner';
 const ProtectedRoute = React.lazy(
   () => import('./admin/components/ProtectedRoute'),
