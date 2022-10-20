@@ -43,7 +43,7 @@ const PhotoItem: React.FC<Props> = ({ aid, photo }) => {
             <Fragment>
               <img
                 className={styles.photo__img}
-                src={`${URLS.awsCloudUrl}/300x200/${url}`}
+                src={`${URLS.awsCloudUrl}/fit-in/420x280/${url}`}
                 alt={title}
               />
               <div className={styles['photo__img-overlay']}>

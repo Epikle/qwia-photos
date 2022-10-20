@@ -21,7 +21,7 @@ const AlbumItem: React.FC<{ album: Album }> = ({ album }) => {
           {thumbnail.url && URLS.awsCloudUrl && (
             <img
               className={styles.album__img}
-              src={URLS.awsCloudUrl + '/300x200/' + thumbnail.url}
+              src={URLS.awsCloudUrl + '/fit-in/420x280/' + thumbnail.url}
               alt={title}
             />
           )}
