@@ -37,6 +37,7 @@
     &:hover,
     &:focus-within {
       opacity: 1;
+      backdrop-filter: blur(2px);
     }
 
     @include mobile {

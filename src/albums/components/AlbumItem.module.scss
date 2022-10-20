@@ -3,9 +3,10 @@
 .album {
   @include frame;
 
-  &:hover,
-  &:focus-within {
+  &:hover img,
+  &:focus-within img {
     filter: grayscale(100%);
+    transform: scale(1.05);
   }
 
   a {
@@ -22,6 +23,7 @@
     display: grid;
     place-items: center;
     font-size: 3rem;
+    overflow: hidden;
   }
 
   &__img {
@@ -29,6 +31,7 @@
     width: 100%;
     aspect-ratio: 3 / 2;
     object-fit: cover;
+    transition: all 250ms ease-in-out;
   }
 
   &__info {
