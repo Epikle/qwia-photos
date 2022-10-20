@@ -18,7 +18,6 @@ type Props = {
 const PhotoLikes: React.FC<Props> = ({ pid, aid, likes }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
-
   const queryClient = useQueryClient();
 
   const deleteLikeMutation = useMutation(
@@ -49,15 +48,15 @@ const PhotoLikes: React.FC<Props> = ({ pid, aid, likes }) => {
     const getVisitorId = localStorage.getItem('qp-id');
     if (!getVisitorId) return;
 
-    if (likes[1]) {
-      deleteLikeMutation.mutate(getVisitorId);
+    if (isLiked) {
       setIsLiked(false);
+      deleteLikeMutation.mutate(getVisitorId);
       setLikesCount((prevState) => --prevState);
       return;
     }
 
-    addLikeMutation.mutate(getVisitorId);
     setIsLiked(true);
+    addLikeMutation.mutate(getVisitorId);
     setLikesCount((prevState) => ++prevState);
   };
 
