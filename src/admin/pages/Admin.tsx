@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import { Outlet } from 'react-router-dom';
 
 import AlbumsList from '../components/AlbumsList';
 import Header from '../components/Header';
@@ -16,7 +17,7 @@ const Admin: React.FC = () => {
           <NewAlbum />
         </aside>
         <main className={styles.main}>
-          <h2>Statistics</h2>
+          <Outlet />
         </main>
       </div>
     </Fragment>

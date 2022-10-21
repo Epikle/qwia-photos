@@ -31,13 +31,12 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Suspense fallback={<LoadingSpinner />}>
         <Routes>
-          <Route path="/" element={<Layout component={Albums} />} />
+          <Route index element={<Layout component={Albums} />} />
           <Route path="/album/:aid" element={<Layout component={Album} />} />
-          <Route path="/admin" element={<ProtectedRoute component={Admin} />} />
-          <Route
-            path="/admin/:aid"
-            element={<ProtectedRoute component={Photos} />}
-          />
+          <Route path="admin" element={<ProtectedRoute component={Admin} />}>
+            <Route index element={<h2>Statistics</h2>} />
+            <Route path=":aid" element={<Photos />} />
+          </Route>
           <Route path="*" element={<Layout component={Albums} />} />
         </Routes>
       </Suspense>

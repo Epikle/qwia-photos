@@ -1,9 +1,9 @@
 import { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth0 } from '@auth0/auth0-react';
 
 import { Album } from '../../shared/util/types';
-import AlbumItem from './AlbumItem';
 import { getAllAlbums } from '../../shared/util/fetch';
 import LoadingSpinner from '../../shared/components/UI/LoadingSpinner';
 
@@ -29,13 +29,9 @@ const AlbumsList: React.FC = () => {
       {albums && (
         <ul>
           {albums.map((album) => (
-            <AlbumItem
-              key={album.id}
-              id={album.id}
-              title={album.title}
-              isPublished={album.isPublished}
-              totalPhotos={album.totalPhotos}
-            />
+            <li key={album.id}>
+              <Link to={`/admin/${album.id}`}>{album.title}</Link>
+            </li>
           ))}
         </ul>
       )}
