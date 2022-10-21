@@ -5,7 +5,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import Button from '../../shared/components/Form/Button';
 import { postNewAlbum } from '../../shared/util/fetch';
 
-import styles from './NewPhoto.module.scss';
+import styles from './NewAlbum.module.scss';
 
 const NewAlbum: React.FC = () => {
   const albumTitle = useRef<HTMLInputElement>(null);
@@ -35,7 +35,7 @@ const NewAlbum: React.FC = () => {
   };
 
   return (
-    <form onSubmit={formSubmitHandler} className={styles['new-photo']}>
+    <form onSubmit={formSubmitHandler} className={styles.form}>
       <label htmlFor="new-album">Create new album</label>
       <input
         type="text"

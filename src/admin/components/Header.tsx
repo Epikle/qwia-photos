@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 
 import Button from '../../shared/components/Form/Button';
@@ -11,12 +10,11 @@ const Header: React.FC = () => {
 
   return (
     <header className={styles.header}>
-      <Link to="/admin">
-        {' '}
-        <h1>qwiaPHOTOS</h1>
-      </Link>
+      <h1>
+        qwia<strong>PHOTOS</strong>
+      </h1>
       <div>
-        {user?.name},{' '}
+        {user?.name}
         <Button
           onClick={() => {
             logout({ returnTo: URLS.pageUrl });

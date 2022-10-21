@@ -1,15 +1,33 @@
+@import '../../setup.scss';
+
 .header {
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: space-between;
-  padding: 1rem;
+  background-color: $color-gray-800;
+  color: white;
 
   h1 {
-    font-weight: bold;
+    padding: 1rem 0.5rem;
+    strong {
+      font-weight: bold;
+    }
   }
 
-  button {
-    &:hover {
-      text-decoration: underline;
+  div {
+    font-size: 0.8rem;
+
+    button {
+      background-color: black;
+      height: 100%;
+      padding-inline: 1rem;
+      margin-left: 0.5rem;
+      font-weight: bold;
+
+      &:hover {
+        background-color: lighten($color: black, $amount: 10);
+      }
     }
   }
 }

@@ -27,7 +27,7 @@ const AlbumsList: React.FC = () => {
     <Fragment>
       {(!albums || albums.length === 0) && <p>No albums...</p>}
       {albums && (
-        <div>
+        <ul>
           {albums.map((album) => (
             <AlbumItem
               key={album.id}
@@ -37,7 +37,7 @@ const AlbumsList: React.FC = () => {
               totalPhotos={album.totalPhotos}
             />
           ))}
-        </div>
+        </ul>
       )}
     </Fragment>
   );

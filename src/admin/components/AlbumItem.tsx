@@ -83,14 +83,11 @@ const AlbumItem: React.FC<Props> = ({
   };
 
   return (
-    <div className={styles.albums}>
-      <div>
-        {newTitle && (
-          <input defaultValue={title} type="text" ref={newTitleInput} />
-        )}
-        {!newTitle && <Link to={`/admin/${id}`}>{title}</Link>}
-      </div>
-      <div>
+    <li>
+      <Link to={`/admin/${id}`}>
+        {title}
+
+        {/* <div>
         <Button onClick={deleteAlbumBtnHandler}>Delete</Button>
         {' | '}
         <Button onClick={changeVisibilityBtnHandler} disabled={!totalPhotos}>
@@ -100,8 +97,9 @@ const AlbumItem: React.FC<Props> = ({
         <Button onClick={editAlbumTitleBtnHandler}>
           {newTitle ? 'Save Title' : 'Edit Title'}
         </Button>
-      </div>
-    </div>
+      </div> */}
+      </Link>
+    </li>
   );
 };
 
