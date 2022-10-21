@@ -7,6 +7,8 @@ import { Album } from '../../shared/util/types';
 import { getAllAlbums } from '../../shared/util/fetch';
 import LoadingSpinner from '../../shared/components/UI/LoadingSpinner';
 
+import styles from './AlbumsList.module.scss';
+
 const AlbumsList: React.FC = () => {
   const { getAccessTokenSilently } = useAuth0();
   const {
@@ -29,7 +31,10 @@ const AlbumsList: React.FC = () => {
       {albums && (
         <ul>
           {albums.map((album) => (
-            <li key={album.id}>
+            <li
+              key={album.id}
+              className={album.isPublished ? styles.published : styles.hidden}
+            >
               <Link to={`/admin/${album.id}`}>{album.title}</Link>
             </li>
           ))}

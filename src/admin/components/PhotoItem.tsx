@@ -63,7 +63,7 @@ const PhotoItem: React.FC<Props> = ({ aid, photo }) => {
   };
 
   return (
-    <div className={styles.photos}>
+    <li className={styles.photos}>
       <div>
         {newTitle && (
           <input
@@ -82,7 +82,7 @@ const PhotoItem: React.FC<Props> = ({ aid, photo }) => {
           {newTitle ? 'Save Title' : 'Edit Title'}
         </Button>
       </div>
-    </div>
+    </li>
   );
 };
 

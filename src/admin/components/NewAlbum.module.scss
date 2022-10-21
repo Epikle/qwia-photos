@@ -5,6 +5,7 @@
   flex-direction: column;
   background-color: darken($color: $color-gray-300, $amount: 5);
   padding-top: 1rem;
+  border-top: 6px solid $color-gray-800;
 
   label {
     padding-left: 0.5rem;

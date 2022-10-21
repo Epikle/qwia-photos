@@ -15,6 +15,7 @@
 
     ul {
       li {
+        position: relative;
         font-size: 0.8rem;
         border-bottom: 1px solid $color-gray-800;
         background-color: darken($color: $color-gray-300, $amount: 5);

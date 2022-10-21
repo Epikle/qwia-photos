@@ -1,6 +1,7 @@
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import { Album as AlbumType, NewData } from '../../shared/util/types';
 import { deleteAlbum, getAlbumById, patchAlbum } from '../../shared/util/fetch';
@@ -8,7 +9,8 @@ import PhotoItem from '../components/PhotoItem';
 import NewPhoto from '../components/NewPhoto';
 import LoadingSpinner from '../../shared/components/UI/LoadingSpinner';
 import Button from '../../shared/components/Form/Button';
-import { useAuth0 } from '@auth0/auth0-react';
+
+import styles from './Photos.module.scss';
 
 const Photos: React.FC = () => {
   const { aid } = useParams() as { aid: string };
@@ -31,14 +33,18 @@ const Photos: React.FC = () => {
     getAlbumById.bind(null, aid),
   );
 
+  useEffect(() => {
+    if (album) setPublished(album.isPublished);
+  }, [album]);
+
   const deleteAlbumMutate = useMutation(
     async () => {
+      navigate('/admin');
       const accessToken = await getAccessTokenSilently();
       await deleteAlbum(aid, accessToken);
     },
     {
       onSuccess: () => {
-        navigate('/admin');
         queryClient.invalidateQueries(['albumsData']);
       },
     },
@@ -93,9 +99,9 @@ const Photos: React.FC = () => {
           {newTitle ? (
             <input defaultValue={album.title} type="text" ref={newTitleInput} />
           ) : (
-            album.title
+            <strong>{album.title}</strong>
           )}
-          <div>
+          <div className={styles['album-controls']}>
             <Button onClick={deleteAlbumBtnHandler}>Delete</Button>
             {' | '}
             <Button
@@ -109,9 +115,11 @@ const Photos: React.FC = () => {
               {newTitle ? 'Save Title' : 'Edit Title'}
             </Button>
           </div>
-          {album.photos.map((photo) => (
-            <PhotoItem key={photo.id} photo={photo} aid={aid} />
-          ))}
+          <ul className={styles['photo-list']}>
+            {album.photos.map((photo) => (
+              <PhotoItem key={photo.id} photo={photo} aid={aid} />
+            ))}
+          </ul>
         </Fragment>
       )}
       <NewPhoto aid={aid} />

@@ -1,0 +1,19 @@
+.published,
+.hidden {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 3px;
+  }
+}
+
+.published::before {
+  background-color: yellowgreen;
+}
+
+.hidden::before {
+  background-color: orangered;
+}

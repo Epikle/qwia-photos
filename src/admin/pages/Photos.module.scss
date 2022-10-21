@@ -1,0 +1,16 @@
+@import '../../setup.scss';
+
+.album-controls {
+  button[disabled] {
+    cursor: not-allowed;
+  }
+}
+
+strong {
+  font-weight: bold;
+}
+
+.photo-list {
+  padding-block: 1rem;
+  border-top: 3px solid $color-gray-300;
+}
