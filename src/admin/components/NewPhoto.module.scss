@@ -1,12 +1,13 @@
+@import '../../setup.scss';
+
 .new-photo {
   display: grid;
-  border: 1px solid gray;
-  margin-block: 2rem;
-  padding: 1rem;
-  max-width: 26rem;
+  gap: 0.5rem;
+  border-top: 3px solid $color-gray-300;
+  padding: 1rem 0;
 
   button {
-    margin-top: 1rem;
+    padding: 0.5rem 1rem;
     border: 1px solid gray;
 
     &:hover,

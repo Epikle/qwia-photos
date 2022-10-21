@@ -44,6 +44,12 @@ export const patchAlbum = async (
   await axios.patch(url, data, config);
 };
 
+export const deleteAlbum = async (aid: string, accessToken: string) => {
+  const url = `${URLS.apiUrl}/api/v2/qwia-photos/album/${aid}`;
+  const config = getHeaders(accessToken);
+  await axios.delete(url, config);
+};
+
 export const postNewPhoto = async (
   aid: string,
   title: string,

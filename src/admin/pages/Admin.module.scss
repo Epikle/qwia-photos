@@ -1,0 +1,43 @@
+@import '../../setup.scss';
+
+.wrapper {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 14rem 1fr;
+
+  .menu {
+    height: auto;
+    background-color: $color-gray-300;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    ul {
+      li {
+        position: relative;
+        font-size: 0.8rem;
+        border-bottom: 1px solid $color-gray-800;
+        background-color: darken($color: $color-gray-300, $amount: 5);
+        display: flex;
+
+        &:hover {
+          cursor: pointer;
+          background-color: darken($color: $color-gray-300, $amount: 10);
+        }
+
+        a {
+          all: unset;
+          flex: 1;
+          padding: 1rem 0.5rem;
+        }
+      }
+    }
+  }
+  .main {
+    h2 {
+      font-weight: bold;
+    }
+    padding: 1rem;
+  }
+}
