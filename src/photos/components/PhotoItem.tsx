@@ -6,7 +6,6 @@ import { Photo, URLS } from '../../shared/util/types';
 import PhotoLikes from './PhotoLikes';
 import PhotoView from './PhotoView';
 import Button from '../../shared/components/Form/Button';
-import LoadingSpinner from '../../shared/components/UI/LoadingSpinner';
 
 import styles from './PhotoItem.module.scss';
 
@@ -27,8 +26,7 @@ const PhotoItem: React.FC<Props> = ({ aid, photo }) => {
   return (
     <Fragment>
       {isView && (
-        <PhotoView onClick={viewBtnHandler}>
-          {isLoading && <LoadingSpinner relative />}
+        <PhotoView onClick={viewBtnHandler} isLoading={isLoading}>
           <img
             src={`${URLS.awsCloudUrl}/fit-in/1980x1080/${url}`}
             alt={title}

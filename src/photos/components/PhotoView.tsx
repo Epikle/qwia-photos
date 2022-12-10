@@ -4,15 +4,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '../../shared/components/Form/Button';
+import LoadingSpinner from '../../shared/components/UI/LoadingSpinner';
 
 import styles from './PhotoView.module.scss';
 
 type Props = {
   onClick: () => void;
+  isLoading: boolean;
   children?: ReactNode;
 };
 
-const PhotoView: React.FC<Props> = ({ onClick, children }) => {
+const PhotoView: React.FC<Props> = ({ onClick, children, isLoading }) => {
   const photoView = document.getElementById('photoview');
 
   const handleEsc = (event: KeyboardEvent) => {
@@ -42,6 +44,7 @@ const PhotoView: React.FC<Props> = ({ onClick, children }) => {
               <FontAwesomeIcon icon={faXmark} />
             </Button>
           </div>
+          {isLoading && <LoadingSpinner />}
           <div className={styles['photoview-content']}>{children}</div>
         </div>
       </div>
