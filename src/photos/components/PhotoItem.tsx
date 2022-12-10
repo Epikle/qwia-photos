@@ -30,7 +30,7 @@ const PhotoItem: React.FC<Props> = ({ aid, photo }) => {
         <PhotoView onClick={viewBtnHandler}>
           {isLoading && <LoadingSpinner relative />}
           <img
-            src={`${URLS.awsCloudUrl}/fit-in/1200x800/${url}`}
+            src={`${URLS.awsCloudUrl}/fit-in/1980x1080/${url}`}
             alt={title}
             onLoad={() => setIsLoading(false)}
           />
