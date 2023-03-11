@@ -20,7 +20,7 @@ const Header: React.FC = () => {
         {user?.name}
         <Button
           onClick={() => {
-            logout({ returnTo: URLS.pageUrl });
+            logout({ logoutParams: { returnTo: URLS.pageUrl } });
           }}
         >
           Logout
