@@ -21,8 +21,11 @@ const Albums: React.FC = () => {
 
   return (
     <Fragment>
-      {(!albums || albums.length === 0) && <p>No albums...</p>}
-      {albums && <AlbumList albums={albums} />}
+      {!albums || albums.length === 0 ? (
+        <p>No albums...</p>
+      ) : (
+        <AlbumList albums={albums} />
+      )}
     </Fragment>
   );
 };

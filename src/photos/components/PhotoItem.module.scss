@@ -1,20 +1,33 @@
 @import '../../setup';
 
 .photo {
-  @include frame;
+  position: relative;
+  border: 2px solid #e1ecf7;
+  border-radius: 5px;
+  overflow: hidden;
 
-  &__img-container {
+  .photo-container {
     position: relative;
-    flex: 1;
-    display: grid;
-    place-items: center;
+
+    img {
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      object-fit: cover;
+    }
   }
 
-  &__img {
-    display: block;
-    width: 100%;
-    aspect-ratio: 3 / 2;
-    object-fit: cover;
+  figcaption {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+
+    abbr {
+      text-decoration: none;
+
+      &:hover {
+        cursor: help;
+      }
+    }
   }
 
   &__img-overlay {
@@ -31,13 +44,13 @@
       border: none;
       outline: none;
       font-size: 3.5rem;
-      opacity: 0.6;
+      opacity: 0.75;
     }
 
     &:hover,
     &:focus-within {
       opacity: 1;
-      backdrop-filter: blur(2px);
+      backdrop-filter: blur(3px);
     }
 
     @include mobile {
@@ -49,22 +62,6 @@
       &:hover,
       &:focus-within {
         opacity: 0;
-      }
-    }
-  }
-
-  &__info {
-    @include frame-info;
-  }
-
-  &__title {
-    @include frame-title;
-
-    abbr {
-      text-decoration: none;
-
-      &:hover {
-        cursor: help;
       }
     }
   }

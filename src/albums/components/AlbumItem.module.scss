@@ -11,34 +11,35 @@
 
   a {
     flex-grow: 1;
-    display: flex;
-    flex-direction: column;
     color: $fc-main;
     text-decoration: none;
   }
 
-  &__img-container {
+  figure {
     position: relative;
-    flex-grow: 1;
-    display: grid;
-    place-items: center;
     font-size: 3rem;
     overflow: hidden;
-  }
 
-  &__img {
-    display: block;
-    width: 100%;
-    aspect-ratio: 3 / 2;
-    object-fit: cover;
-    transition: all 250ms ease-in-out;
-  }
+    img {
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      object-fit: cover;
+      transition: all 250ms ease-in-out;
+    }
 
-  &__info {
-    @include frame-info;
-  }
-
-  &__title {
-    @include frame-title;
+    figcaption {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 0.5rem;
+      background-color: hsla(220, 27%, 98%, 0.5);
+      font-size: 1rem;
+      font-weight: 300;
+      color: $color-gray-800;
+      font-family: 'Merriweather', serif;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      backdrop-filter: blur(2px);
+    }
   }
 }

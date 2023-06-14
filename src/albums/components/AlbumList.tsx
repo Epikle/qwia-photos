@@ -1,4 +1,4 @@
-import { Album } from '../../shared/util/types';
+import { type Album } from '../../shared/util/types';
 import AlbumItem from './AlbumItem';
 
 import styles from './AlbumList.module.scss';

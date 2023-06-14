@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faImage } from '@fortawesome/free-solid-svg-icons';
 
@@ -23,8 +23,52 @@ const PhotoItem: React.FC<Props> = ({ aid, photo }) => {
     setIsView((prevState) => !prevState);
   };
 
+  // return (
+  //   <Fragment>
+  //     {isView && (
+  //       <PhotoView onClick={viewBtnHandler} isLoading={isLoading}>
+  //         <img
+  //           src={`${URLS.awsCloudUrl}/fit-in/1980x1080/${url}`}
+  //           alt={title}
+  //           onLoad={() => setIsLoading(false)}
+  //         />
+  //       </PhotoView>
+  //     )}
+  //     <article className={styles.photo}>
+  //       <div className={styles['photo__img-container']}>
+  //         {(!url || !URLS.awsCloudUrl) && <FontAwesomeIcon icon={faImage} />}
+  //         {url && URLS.awsCloudUrl && (
+  //           <Fragment>
+  //             <img
+  //               className={styles.photo__img}
+  //               src={`${URLS.awsCloudUrl}/fit-in/420x280/${url}`}
+  //               alt={title}
+  //             />
+  //             <div className={styles['photo__img-overlay']}>
+  //               <Button
+  //                 onClick={viewBtnHandler}
+  //                 className={[styles['photo__img-overlay-btn']]}
+  //                 ariaLabel="Preview photo"
+  //               >
+  //                 <FontAwesomeIcon icon={faMagnifyingGlass} />
+  //               </Button>
+  //             </div>
+  //           </Fragment>
+  //         )}
+  //       </div>
+  //       <div className={styles.photo__info}>
+  //         <h2 className={styles.photo__title}>
+  //           <abbr title={title}>{title}</abbr>
+  //         </h2>
+
+  //         <PhotoLikes pid={id} aid={aid} likes={likes} />
+  //       </div>
+  //     </article>
+  //   </Fragment>
+  // );
+
   return (
-    <Fragment>
+    <>
       {isView && (
         <PhotoView onClick={viewBtnHandler} isLoading={isLoading}>
           <img
@@ -34,37 +78,32 @@ const PhotoItem: React.FC<Props> = ({ aid, photo }) => {
           />
         </PhotoView>
       )}
-      <article className={styles.photo}>
-        <div className={styles['photo__img-container']}>
-          {(!url || !URLS.awsCloudUrl) && <FontAwesomeIcon icon={faImage} />}
-          {url && URLS.awsCloudUrl && (
-            <Fragment>
-              <img
-                className={styles.photo__img}
-                src={`${URLS.awsCloudUrl}/fit-in/420x280/${url}`}
-                alt={title}
-              />
-              <div className={styles['photo__img-overlay']}>
-                <Button
-                  onClick={viewBtnHandler}
-                  className={[styles['photo__img-overlay-btn']]}
-                  ariaLabel="Preview photo"
-                >
-                  <FontAwesomeIcon icon={faMagnifyingGlass} />
-                </Button>
-              </div>
-            </Fragment>
-          )}
-        </div>
-        <div className={styles.photo__info}>
-          <h2 className={styles.photo__title}>
-            <abbr title={title}>{title}</abbr>
-          </h2>
-
+      <figure className={styles.photo}>
+        {!url || !URLS.awsCloudUrl ? (
+          <FontAwesomeIcon icon={faImage} />
+        ) : (
+          <div className={styles['photo-container']}>
+            <img
+              src={`${URLS.awsCloudUrl}/fit-in/420x280/${url}`}
+              alt={title}
+            />
+            <div className={styles['photo__img-overlay']}>
+              <Button
+                onClick={viewBtnHandler}
+                className={[styles['photo__img-overlay-btn']]}
+                ariaLabel="Preview photo"
+              >
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+              </Button>
+            </div>
+          </div>
+        )}
+        <figcaption>
+          <abbr title={title}>{title}</abbr>
           <PhotoLikes pid={id} aid={aid} likes={likes} />
-        </div>
-      </article>
-    </Fragment>
+        </figcaption>
+      </figure>
+    </>
   );
 };
 
