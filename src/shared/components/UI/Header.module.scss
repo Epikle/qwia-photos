@@ -29,6 +29,10 @@
       &:focus-visible {
         opacity: 0.8;
         outline: none;
+
+        strong {
+          text-decoration: underline $color-blue-300 8px;
+        }
       }
     }
   }

@@ -66,6 +66,7 @@ const PhotoLikes: React.FC<Props> = ({ pid, aid, likes }) => {
         <span className={styles['photo__likes-number']}>{likesCount}</span>
       )}
       <Button
+        ariaLabel={isLiked ? 'Remove like' : 'Like photo'}
         onClick={likedBtnHandler}
         className={
           isLiked

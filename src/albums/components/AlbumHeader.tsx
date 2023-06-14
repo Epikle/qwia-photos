@@ -9,7 +9,11 @@ const AlbumHeader: React.FC<{ title: string }> = ({ title }) => (
     <nav aria-label="Breadcrumb" className={styles.breadcrumb}>
       <ul className={styles.breadcrumb__list}>
         <li className={styles['breadcrumb__list-item']}>
-          <Link to="/" className={styles['breadcrumb__list-link']}>
+          <Link
+            to="/"
+            className={styles['breadcrumb__list-link']}
+            aria-label="Home"
+          >
             <FontAwesomeIcon icon={faHouse} />
           </Link>
         </li>
