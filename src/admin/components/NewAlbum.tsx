@@ -12,17 +12,15 @@ const NewAlbum: React.FC = () => {
   const queryClient = useQueryClient();
   const { getAccessTokenSilently } = useAuth0();
 
-  const newAlbumMutation = useMutation(
-    async (title: string) => {
+  const newAlbumMutation = useMutation({
+    mutationFn: async (title: string) => {
       const accessToken = await getAccessTokenSilently();
       await postNewAlbum(title, accessToken);
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['albumsData']);
-      },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['albumsData'] });
     },
-  );
+  });
 
   const formSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

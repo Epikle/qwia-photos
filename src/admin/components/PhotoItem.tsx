@@ -20,29 +20,25 @@ const PhotoItem: React.FC<Props> = ({ aid, photo }) => {
   const [newTitle, setNewTitle] = useState(false);
   const { getAccessTokenSilently } = useAuth0();
 
-  const deletePhotoMutation = useMutation(
-    async () => {
+  const deletePhotoMutation = useMutation({
+    mutationFn: async () => {
       const accessToken = await getAccessTokenSilently();
       await deletePhoto(pid, accessToken);
     },
-    {
-      onSuccess: async () => {
-        queryClient.invalidateQueries(['albumData', aid]);
-      },
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ['albumData', aid] });
     },
-  );
+  });
 
-  const titlePhotoMutation = useMutation(
-    async (title: string) => {
+  const titlePhotoMutation = useMutation({
+    mutationFn: async (title: string) => {
       const accessToken = await getAccessTokenSilently();
       await patchPhoto(title, pid, accessToken);
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['albumData', aid]);
-      },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['albumData', aid] });
     },
-  );
+  });
 
   const deleteBtnHandler = () => {
     if (window.confirm('Are you sure you want to delete this photo?')) {

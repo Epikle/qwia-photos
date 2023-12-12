@@ -18,13 +18,14 @@ const Album: React.FC = () => {
     isError,
     data: album,
     error,
-  } = useQuery<AlbumType, Error>(
-    ['albumData', aid],
-    getAlbumById.bind(null, aid),
-  );
+  } = useQuery<AlbumType, Error>({
+    queryKey: ['albumData', aid],
+    queryFn: getAlbumById.bind(null, aid),
+  });
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <p>Error: {error.message}</p>;
+  if (!album) return null;
 
   document.title = `qwiaPHOTOS | ${album.title}`;
 

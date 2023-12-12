@@ -16,8 +16,8 @@ const NewPhoto: React.FC<{ aid: string }> = ({ aid }) => {
   const [title, setTitle] = useState('');
   const fileInput = useRef<HTMLInputElement>(null);
 
-  const newPhotoMutation = useMutation(
-    async ({
+  const newPhotoMutation = useMutation({
+    mutationFn: async ({
       title,
       key,
       accessToken,
@@ -28,12 +28,10 @@ const NewPhoto: React.FC<{ aid: string }> = ({ aid }) => {
     }) => {
       await postNewPhoto(aid, title, key, accessToken);
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['albumData', aid]);
-      },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['albumData', aid] });
     },
-  );
+  });
 
   const newPhotoSubmitHandler = async (
     event: React.ChangeEvent<HTMLFormElement>,

@@ -20,22 +20,18 @@ const PhotoLikes: React.FC<Props> = ({ pid, aid, likes }) => {
   const [likesCount, setLikesCount] = useState(0);
   const queryClient = useQueryClient();
 
-  const deleteLikeMutation = useMutation(
-    async (lid: string) => await deleteLike(pid, lid),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['albumData', aid]);
-      },
+  const deleteLikeMutation = useMutation({
+    mutationFn: async (lid: string) => await deleteLike(pid, lid),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['albumData', aid] });
     },
-  );
-  const addLikeMutation = useMutation(
-    async (lid: string) => await addLike(pid, lid),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['albumData', aid]);
-      },
+  });
+  const addLikeMutation = useMutation({
+    mutationFn: async (lid: string) => await addLike(pid, lid),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['albumData', aid] });
     },
-  );
+  });
 
   useEffect(() => {
     localStorage.getItem('qp-id') || localStorage.setItem('qp-id', nanoid());

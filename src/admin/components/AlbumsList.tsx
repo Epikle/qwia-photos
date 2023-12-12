@@ -16,10 +16,13 @@ const AlbumsList: React.FC = () => {
     isError,
     data: albums,
     error,
-  } = useQuery<Album[], Error>(['albumsData'], async () => {
-    const accessToken = await getAccessTokenSilently();
-    const albums = await getAllAlbums(accessToken);
-    return albums;
+  } = useQuery<Album[], Error>({
+    queryKey: ['albumsData'],
+    queryFn: async () => {
+      const accessToken = await getAccessTokenSilently();
+      const albums = await getAllAlbums(accessToken);
+      return albums;
+    },
   });
 
   if (isLoading) return <LoadingSpinner />;

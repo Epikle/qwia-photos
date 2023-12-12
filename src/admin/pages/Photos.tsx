@@ -14,57 +14,51 @@ import styles from './Photos.module.scss';
 
 const Photos: React.FC = () => {
   const { aid } = useParams() as { aid: string };
-
   const { getAccessTokenSilently } = useAuth0();
   const queryClient = useQueryClient();
-
   const [published, setPublished] = useState(false);
   const [newTitle, setNewTitle] = useState(false);
   const newTitleInput = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-
   const {
     isLoading,
     isError,
     data: album,
     error,
-  } = useQuery<AlbumType, Error>(
-    ['albumData', aid],
-    getAlbumById.bind(null, aid),
-  );
+  } = useQuery<AlbumType, Error>({
+    queryKey: ['albumData', aid],
+    queryFn: getAlbumById.bind(null, aid),
+  });
 
   useEffect(() => {
     if (album) setPublished(album.isPublished);
   }, [album]);
 
-  const deleteAlbumMutate = useMutation(
-    async () => {
+  const deleteAlbumMutate = useMutation({
+    mutationFn: async () => {
       navigate('/admin');
       const accessToken = await getAccessTokenSilently();
       await deleteAlbum(aid, accessToken);
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['albumsData']);
-      },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['albumsData'] });
     },
-  );
+  });
 
-  const mutateAlbumData = useMutation(
-    async (newData: NewData) => {
+  const mutateAlbumData = useMutation({
+    mutationFn: async (newData: NewData) => {
       const accessToken = await getAccessTokenSilently();
       await patchAlbum(newData, aid, accessToken);
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['albumsData']);
-        queryClient.invalidateQueries(['albumData', aid]);
-      },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['albumsData'] });
+      queryClient.invalidateQueries({ queryKey: ['albumData', aid] });
     },
-  );
+  });
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <p>Error: {error.message}</p>;
+  if (!album) return null;
 
   const changeVisibilityBtnHandler = () => {
     mutateAlbumData.mutate({ title: album.title, isPublished: !published });
