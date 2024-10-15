@@ -1,9 +1,0 @@
-@import '../../setup';
-
-.albums {
-  @include grid;
-
-  @include mobile {
-    grid-template-columns: 1fr;
-  }
-}
